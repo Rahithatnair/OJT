@@ -1,8 +1,3 @@
-#starting point
-#learning rate alpha
-#number of iteration
-
-#example of gradient descent
 
 x=10
 learning_rate= 0.1
