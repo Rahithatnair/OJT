@@ -1,0 +1,45 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score,classification_report,confusion_matrix,recall_score,precision_score
+from sklearn.model_selection import GridSearchCV
+
+
+#load the dataset loan_data.csv
+data = pd.read_csv('loan_data.csv')
+
+#select the features which need to be used in the case
+x = data[['loan_amount','interest_rate','term','income','credit_score','age','employment_length']]
+y=data[['loan_repaid']]
+
+
+#split train_tests
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
+
+#initiate a model
+model = DecisionTreeClassifier(random_state=42)
+
+#train the model
+model.fit(x_train,y_train)
+
+#make a prediction
+y_pred=model.predict(x_test)
+accuracy = accuracy_score(y_test,y_pred)
+print(f"accuracy:{accuracy:.2f}")
+print("classification_report:")
+print(classification_report(y_test,y_pred))
+
+print("confusion matrix")
+print(confusion_matrix(y_test,y_pred))
+
+#precision
+precision = precision_score(y_test,y_pred)
+print("precision:",precision)
+
+#recall
+recall = recall_score(y_test,y_pred)
+print("recall:",recall)
+
+#f1-score
+f1 = 2 * (precision * recall) / (precision + recall)
+print("f1-score:",f1)
